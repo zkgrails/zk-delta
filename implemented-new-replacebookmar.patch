@@ -6,7 +6,7 @@ From: Chanwit Kaewkasi <chanwit@gmail.com>
 ---
  zk/src/archive/web/js/zk/html/au.js               |    3 ++
  zk/src/archive/web/js/zk/html/common.js           |   15 ++++++++-
- zk/src/org/zkoss/zk/au/out/AuBookmark.java        |    0 
+ zk/src/org/zkoss/zk/au/out/AuBookmark.java        |    0
  zk/src/org/zkoss/zk/au/out/AuReplaceBookmark.java |   36 +++++++++++++++++++++
  zk/src/org/zkoss/zk/ui/impl/DesktopImpl.java      |   15 +++++++++
  5 files changed, 67 insertions(+), 2 deletions(-)
@@ -23,12 +23,12 @@ index 8ab9b13..81fd2f1
 --- a/zk/src/archive/web/js/zk/html/au.js
 +++ b/zk/src/archive/web/js/zk/html/au.js
 @@ -2336,6 +2336,9 @@ zkau.history = new zk.History();
- 
+
  //Commands//
  zkau.cmd0 = { //no uuid at all
 +	replaceBookmark: function (dt0) {
 +		zkau.history.replaceBookmark(dt0);
-+	},	
++	},
  	bookmark: function (dt0) {
  		zkau.history.bookmark(dt0);
  	},
@@ -64,7 +64,7 @@ index c2df929..928ce16
  			zkau.onURLChange();
  		}
 -	},
-+	},	
++	},
  	/** Checks whether the bookmark is changed. */
  	checkBookmark: function() {
  		var nm = this.getBookmark();
@@ -101,7 +101,7 @@ index 0000000..7a2e7e9
 + * A response to ask the client to bookmark the desktop.
 + *
 + * <p>data[0]: the name of the bookmark.
-+ * 
++ *
 + * @author tomyeh
 + * @since 3.0.0
 + */
@@ -144,7 +144,7 @@ index 3e4e469..a680b8b
 +			((WebAppCtrl)_wapp).getUiEngine()
 +				.addResponse("bookmark", new AuBookmark(name));
 +		}
-+	}	
- 
++	}
+
  	public Collection getComponents() {
  		return _comps.values();
