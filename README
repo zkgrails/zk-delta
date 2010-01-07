@@ -1,0 +1,10 @@
+README
+
+Step to apply patches:
+1. have your ZK 3.6.3 directory readly
+2. # ln -s ../zk-delta patches
+3. # patches/apply.sh
+
+If you have new commits and would like to store them back to the patch repositry,
+please do
+1. 

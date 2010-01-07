@@ -4,7 +4,6 @@ From: Chanwit Kaewkasi <chanwit@gmail.com>
 
 
 ---
-
  zk/src/archive/web/js/zk/html/au.js               |    3 ++
  zk/src/archive/web/js/zk/html/common.js           |   15 ++++++++-
  zk/src/org/zkoss/zk/au/out/AuBookmark.java        |    0 
@@ -16,7 +15,6 @@ From: Chanwit Kaewkasi <chanwit@gmail.com>
  mode change 100644 => 100755 zk/src/org/zkoss/zk/au/out/AuBookmark.java
  create mode 100755 zk/src/org/zkoss/zk/au/out/AuReplaceBookmark.java
  mode change 100644 => 100755 zk/src/org/zkoss/zk/ui/impl/DesktopImpl.java
-
 
 diff --git a/zk/src/archive/web/js/zk/html/au.js b/zk/src/archive/web/js/zk/html/au.js
 old mode 100644
@@ -44,7 +42,7 @@ index c2df929..928ce16
  			//Though IE use history.html, timer is still required
  			//because user might specify URL directly
  	},
-+	/** New version of setting a bookmark, use replace rather than creating a new history */	
++	/** New version of setting a bookmark, use replace rather than creating a new history */
 +	replaceBookmark: function (nm) {
 +		if (this.curbk != nm) {
 +			this.curbk = nm; //to avoid loop back the server
@@ -83,9 +81,9 @@ index 0000000..7a2e7e9
 +
 +{{IS_NOTE
 +	Purpose:
-+		
++
 +	Description:
-+		
++
 +	History:
 +		Mon May 29 18:50:13     2006, Created by tomyeh
 +}}IS_NOTE
@@ -144,7 +142,7 @@ index 3e4e469..a680b8b
 +				.addResponse("replaceBookmark", new AuReplaceBookmark(name));
 +		} else {
 +			((WebAppCtrl)_wapp).getUiEngine()
-+				.addResponse("bookmark", new AuBookmark(name));			
++				.addResponse("bookmark", new AuBookmark(name));
 +		}
 +	}	
  
