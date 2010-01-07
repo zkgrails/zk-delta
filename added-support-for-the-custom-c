@@ -1,0 +1,58 @@
+added support for the custom content loader
+
+From: Chanwit Kaewkasi <chanwit@gmail.com>
+
+
+---
+ .../org/zkoss/zk/ui/metainfo/PageDefinitions.java  |   21 +++++++++++++++++++-
+ 1 files changed, 20 insertions(+), 1 deletions(-)
+ mode change 100644 => 100755 zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
+
+diff --git a/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java b/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
+old mode 100644
+new mode 100755
+index d628a25..31c2b86
+--- a/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
++++ b/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
+@@ -37,6 +37,8 @@ import org.zkoss.zk.ui.Execution;
+ import org.zkoss.zk.ui.Executions;
+ import org.zkoss.zk.ui.metainfo.Parser;
+ 
++import java.lang.reflect.Constructor;
++
+ /**
+  * Utilities to retrieve page definitions.
+  *
+@@ -163,14 +165,31 @@ public class PageDefinitions {
+ 			return new ServletContextLocator((ServletContext)ctx, path);
+ 		throw new UnsupportedOperationException("Unknown context: "+ctx);
+ 	}
++	
++	private static Class RESOURCE_LOADER_CLASS = null;
++	public static void setResourceLoaderClass(Class c) {
++		RESOURCE_LOADER_CLASS = c;
++	}
+ 
+ 	private static final ResourceCache getCache(WebApp wapp) {
+ 		ResourceCache cache = (ResourceCache)wapp.getAttribute(ATTR_PAGE_CACHE);
+ 		if (cache == null) {
+ 			synchronized (PageDefinitions.class) {
+ 				cache = (ResourceCache)wapp.getAttribute(ATTR_PAGE_CACHE);
++				ResourceLoader rLoader = null;
+ 				if (cache == null) {
+-					cache = new ResourceCache(new MyLoader(wapp), 167);
++					try {
++						Class rlClass = RESOURCE_LOADER_CLASS;
++						if(rlClass == null) rLoader = new MyLoader(wapp);
++						else {
++							Constructor ctor = rlClass.getDeclaredConstructor(new Class[]{WebApp.class});
++							rLoader = (ResourceLoader)ctor.newInstance(new Object[]{wapp});
++						}
++					} catch(Throwable e) {
++						e.printStackTrace();
++						rLoader = new MyLoader(wapp);
++					}
++					cache = new ResourceCache(rLoader, 167);
+ 					cache.setMaxSize(1024);
+ 					cache.setLifetime(60*60000); //1hr
+ 					wapp.setAttribute(ATTR_PAGE_CACHE, cache);

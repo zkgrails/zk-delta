@@ -1,0 +1,16 @@
+README
+------
+
+This patches require GIT and Stacked GIT for managing them.
+
+Step to apply patches:
+
+1. have your ZK 5.0 directory ready, e.g., ~/zk-src-5.0
+   $ cd
+   $ git svn clone -r12937:HEAD http://zk1.svn.sourceforge.net/svnroot/zk1/releases/5.0 zk-src-5.0
+2. checkout zk-delta to the same directory level as your ZK code, e.g., ~/zk-delta   
+   $ cd
+   $ git clone git://github.com/zkgrails/zk-delta.git
+3. $ cd ~/zk-src-5.0
+4. $ ln -s ../zk-delta patches
+5. $ patches/apply.sh
