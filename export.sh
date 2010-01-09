@@ -1,1 +1,1 @@
-stg export -p -d patches
+stg export -d patches
