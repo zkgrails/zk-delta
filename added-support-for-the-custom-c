@@ -4,10 +4,57 @@ From: Chanwit Kaewkasi <chanwit@gmail.com>
 
 
 ---
- .../org/zkoss/zk/ui/metainfo/PageDefinitions.java  |   21 +++++++++++++++++++-
- 1 files changed, 20 insertions(+), 1 deletions(-)
+ zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java |   23 ++++++++++++++++++++
+ .../org/zkoss/zk/ui/metainfo/PageDefinitions.java  |   21 +++++++++++++++++-
+ 2 files changed, 43 insertions(+), 1 deletions(-)
+ mode change 100644 => 100755 zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
  mode change 100644 => 100755 zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
 
+diff --git a/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java b/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
+old mode 100644
+new mode 100755
+index 877a25b..c2d4883
+--- a/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
++++ b/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
+@@ -25,6 +25,8 @@ import java.util.Set;
+ import java.util.Collection;
+ import java.util.Collections;
+ 
++import java.lang.reflect.Method;
++
+ import org.zkoss.lang.D;
+ import org.zkoss.lang.Strings;
+ import org.zkoss.lang.Classes;
+@@ -392,8 +394,29 @@ implements Cloneable, Condition, java.io.Externalizable {
+ 		if (cp != null)
+ 			composers.add(cp);
+ 	}
++
++	private static Class composerResolver = null;
++	public static void setComposerResolver(Class c) {
++		composerResolver = c;
++	}
++
+ 	private static Composer toComposer(Page page, Object o)
+ 	throws Exception {
++		if(composerResolver != null) {
++			try {
++				Method m = composerResolver.getMethod(
++					"resolveComposer", 
++					new Class[]{Page.class, String.class}
++				);
++				if(o instanceof String) {
++					Composer result = (Composer)m.invoke(
++						null,
++						new Object[]{page, o}
++					);
++					if(result != null) return result;
++				}
++			}catch(Throwable e) { e.printStackTrace(); }
++		}
+ 		if (o instanceof String) {
+ 			final String clsnm = ((String)o).trim();
+ 			o = page != null ? page.resolveClass(clsnm).newInstance():
 diff --git a/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java b/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
 old mode 100644
 new mode 100755
