@@ -40,7 +40,7 @@ index 877a25b..c2d4883
 +		if(composerResolver != null) {
 +			try {
 +				Method m = composerResolver.getMethod(
-+					"resolveComposer", 
++					"resolveComposer",
 +					new Class[]{Page.class, String.class}
 +				);
 +				if(o instanceof String) {
@@ -74,7 +74,7 @@ index d628a25..31c2b86
  			return new ServletContextLocator((ServletContext)ctx, path);
  		throw new UnsupportedOperationException("Unknown context: "+ctx);
  	}
-+	
++
 +	private static Class RESOURCE_LOADER_CLASS = null;
 +	public static void setResourceLoaderClass(Class c) {
 +		RESOURCE_LOADER_CLASS = c;
