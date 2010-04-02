@@ -13,7 +13,7 @@ From: Chanwit Kaewkasi <chanwit@gmail.com>
 diff --git a/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java b/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
 old mode 100644
 new mode 100755
-index 877a25b..c2d4883
+index 6b2fb81..99d517c
 --- a/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
 +++ b/zk/src/org/zkoss/zk/ui/metainfo/ComponentInfo.java
 @@ -25,6 +25,8 @@ import java.util.Set;
@@ -58,7 +58,7 @@ index 877a25b..c2d4883
 diff --git a/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java b/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
 old mode 100644
 new mode 100755
-index d628a25..31c2b86
+index d628a25..eaa6a1f
 --- a/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
 +++ b/zk/src/org/zkoss/zk/ui/metainfo/PageDefinitions.java
 @@ -37,6 +37,8 @@ import org.zkoss.zk.ui.Execution;
@@ -70,16 +70,15 @@ index d628a25..31c2b86
  /**
   * Utilities to retrieve page definitions.
   *
-@@ -163,14 +165,31 @@ public class PageDefinitions {
- 			return new ServletContextLocator((ServletContext)ctx, path);
+@@ -164,13 +166,30 @@ public class PageDefinitions {
  		throw new UnsupportedOperationException("Unknown context: "+ctx);
  	}
-+
+ 
 +	private static Class RESOURCE_LOADER_CLASS = null;
 +	public static void setResourceLoaderClass(Class c) {
 +		RESOURCE_LOADER_CLASS = c;
 +	}
- 
++
  	private static final ResourceCache getCache(WebApp wapp) {
  		ResourceCache cache = (ResourceCache)wapp.getAttribute(ATTR_PAGE_CACHE);
  		if (cache == null) {
